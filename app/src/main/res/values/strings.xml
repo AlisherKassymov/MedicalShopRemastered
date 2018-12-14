@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">MedicalShopRemastered</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="openDrawer">open_drawer</string>
@@ -32,4 +30,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="toolbar_title">Medicines</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
+    <string name="app_name">Medicine Shop</string>
+    <string name="android_medicine">Medicine Shop Inc.</string>
+    <string name="profile">Profile</string>
+    <string name="medicines">Medicines</string>
+    <string name="pharmacies">Pharmacies</string>
+    <string name="doctors">Doctors</string>
+    <string name="clinics">Clinics</string>
 </resources>
