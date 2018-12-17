@@ -13,4 +13,9 @@
     <color name="row_activated">#e0e0e0</color>
     <color name="bg_action_mode">#757575</color>
     <color name="bg_circle_default">#666666</color>
+    <color name="lightgray">#ededed</color>
+    <color name="green">#00bfa5</color>
+    <color name="perple">#FFBF007F</color>
+    <color name="yellow">#f1e435</color>
+
 </resources>

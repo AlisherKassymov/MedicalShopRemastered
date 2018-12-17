@@ -1,5 +1,6 @@
 package com.example.alisher.medicalshopremastered.fragment;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,15 +9,34 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.alisher.medicalshopremastered.R;
 import com.example.alisher.medicalshopremastered.adapter.MedicineAdapter;
 import com.example.alisher.medicalshopremastered.decorator.SimpleDividerItemDecoration;
 import com.example.alisher.medicalshopremastered.enitity.Medicine;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +48,10 @@ import com.example.alisher.medicalshopremastered.enitity.Medicine;
  */
 public class MedicineFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private MedicineAdapter mAdapter;
+    List<Medicine> medicines=new ArrayList<>();
+    private String JSONUrl="http://0129df58.ngrok.io/api/medicine";
+    private SearchView searchView;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -68,25 +90,31 @@ public class MedicineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_medicine, container, false);
+
         mRecyclerView=(RecyclerView) view.findViewById(R.id.medicineRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        /*medicines.add(new Medicine("Ковалол", "432432"));
+        medicines.add(new Medicine("Лолик 2","1232"));
+        medicines.add(new Medicine("Кетонал","321"));*/
 
-        Medicine medicine[]={new Medicine("КОрвалол ","42343"),
-                new Medicine("Лолик 2","3424"),
-        new Medicine("Тадададам","3121")};
-        mAdapter=new MedicineAdapter(medicine);
+        mAdapter=new MedicineAdapter(medicines);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL,36));
         mRecyclerView.setAdapter(mAdapter);
+
+        jsonParser();
 
         return view;
     }
@@ -129,4 +157,83 @@ public class MedicineFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void jsonParser(){
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(JSONUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+
+                        Medicine medicine = new Medicine();
+                        medicine.setName(jsonObject.getString("name"));
+                        medicine.setPrice(jsonObject.getString("price"));
+
+                        medicines.add(medicine);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley",error.toString());
+            }
+        });
+        RequestQueue requestQueue=Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem=menu.findItem(R.id.action_search);
+        searchView=(SearchView)menuItem.getActionView();
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

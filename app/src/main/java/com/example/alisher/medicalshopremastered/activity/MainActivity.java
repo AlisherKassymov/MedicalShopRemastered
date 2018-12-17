@@ -1,5 +1,7 @@
 package com.example.alisher.medicalshopremastered.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.alisher.medicalshopremastered.R;
+import com.example.alisher.medicalshopremastered.adapter.MedicineAdapter;
 import com.example.alisher.medicalshopremastered.fragment.DoctorsFragment;
 import com.example.alisher.medicalshopremastered.fragment.EnterpriseFragment;
 import com.example.alisher.medicalshopremastered.fragment.HomeFragment;
@@ -42,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    private RecyclerView recyclerView;
+    private MedicineAdapter mAdapter;
+    private SearchView searchView;
+    private MedicineFragment medicineFragment;
 
 
     // urls to load navigation header background image
@@ -339,6 +345,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+
         // Inflate the menu; this adds items to the action bar if it is present.
 
         // show menu only when home fragment is selected
