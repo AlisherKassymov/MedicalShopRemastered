@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,13 @@ import com.example.alisher.medicalshopremastered.R;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
+    //5 Cardview for Home Fragment
+    private CardView doctodCard, enterpriseCard, medicinesCard, pharmacyCard;
+    private FragmentManager fragmentManager;
+    public static int navItemIndex = 1;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,10 +70,21 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_home, container, false);
+        /*//Define card
+        doctodCard=(CardView) view.findViewById(R.id.doctorCardID);
+        enterpriseCard=(CardView) view.findViewById(R.id.enterpriseCardID);
+        medicinesCard=(CardView) view.findViewById(R.id.medicinesCardID);
+        pharmacyCard=(CardView) view.findViewById(R.id.pharmacyCardID);
+        //Add click listener
+        doctodCard.setOnClickListener(this);
+        enterpriseCard.setOnClickListener(this);
+        medicinesCard.setOnClickListener(this);
+        pharmacyCard.setOnClickListener(this);
+*/
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +111,24 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
+   /* @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.doctorCardID:
+                Fragment fragment=getHomeFragment();
+                replaceFragment(fragment);
+                break;
+
+        }
+    }
+
+    public void replaceFragment(Fragment someFragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commitAllowingStateLoss();
+    }*/
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -105,4 +143,33 @@ public class HomeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+   /* private Fragment getHomeFragment() {
+        switch (navItemIndex) {
+            case 0:
+                // home
+                HomeFragment homeFragment = new HomeFragment();
+                return homeFragment;
+            case 1:
+                // photos
+                DoctorsFragment DoctorsFragment = new DoctorsFragment();
+                return DoctorsFragment;
+            case 2:
+                // movies fragment
+                EnterpriseFragment EnterpriseFragment = new EnterpriseFragment();
+                return EnterpriseFragment;
+            case 3:
+                // notifications fragment
+                PharmacyFragment PharmacyFragment = new PharmacyFragment();
+                return PharmacyFragment;
+
+            case 4:
+                // settings fragment
+                MedicineFragment MedicineFragment = new MedicineFragment();
+                return MedicineFragment;
+            default:
+                return new HomeFragment();
+        }
+    }*/
 }

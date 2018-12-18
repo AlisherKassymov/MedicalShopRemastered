@@ -49,7 +49,7 @@ public class PharmacyFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PharmacyAdapter mAdapter;
     List<Pharmacy> pharmacies=new ArrayList<>();
-    private String JSONUrl="http://0129df58.ngrok.io/api/pharmacie";
+    private String JSONUrl="http://f50b2de5.ngrok.io/api/pharmacie";
     private SearchView searchView;
 
 
@@ -104,7 +104,7 @@ public class PharmacyFragment extends Fragment {
         mRecyclerView=(RecyclerView) view.findViewById(R.id.pharmacyRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        mAdapter=new PharmacyAdapter(pharmacies);
+        mAdapter=new PharmacyAdapter(pharmacies,view.getContext());
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL,36));
         mRecyclerView.setAdapter(mAdapter);
@@ -161,8 +161,11 @@ public class PharmacyFragment extends Fragment {
                         JSONObject jsonObject = response.getJSONObject(i);
 
                         Pharmacy pharmacy= new Pharmacy();
+                        pharmacy.setPharmId(jsonObject.getInt("pharmID"));
                         pharmacy.setPharmName(jsonObject.getString("pharmName"));
                         pharmacy.setTime_at(jsonObject.getString("time_at"));
+                        pharmacy.setPharmAddress(jsonObject.getString("pharmAddress"));
+                        pharmacy.setPharmPhone(jsonObject.getString("pharmPhone"));
 
                         pharmacies.add(pharmacy);
                     } catch (JSONException e) {

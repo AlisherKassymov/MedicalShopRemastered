@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +38,7 @@ import com.example.alisher.medicalshopremastered.fragment.MedicineFragment;
 import com.example.alisher.medicalshopremastered.fragment.PharmacyFragment;
 import com.example.alisher.medicalshopremastered.other.CircleTransform;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private MedicineAdapter mAdapter;
     private SearchView searchView;
     private MedicineFragment medicineFragment;
+    private CardView doctodCard, enterpriseCard, medicinesCard, pharmacyCard;
 
 
     // urls to load navigation header background image
@@ -97,6 +99,17 @@ public class MainActivity extends AppCompatActivity {
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+
+        doctodCard=(CardView)findViewById(R.id.doctorCardID);
+        enterpriseCard=(CardView)findViewById(R.id.enterpriseCardID);
+        medicinesCard=(CardView)findViewById(R.id.medicinesCardID);
+        pharmacyCard=(CardView)findViewById(R.id.pharmacyCardID);
+        //Add click listener
+        /*doctodCard.setOnClickListener((View.OnClickListener) this);
+        enterpriseCard.setOnClickListener((View.OnClickListener) this);
+        medicinesCard.setOnClickListener((View.OnClickListener) this);
+        pharmacyCard.setOnClickListener((View.OnClickListener) this);*/
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -209,20 +222,20 @@ public class MainActivity extends AppCompatActivity {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                // photos
+                // doctors
                 DoctorsFragment DoctorsFragment = new DoctorsFragment();
                 return DoctorsFragment;
             case 2:
-                // movies fragment
+                // enterprise fragment
                 EnterpriseFragment EnterpriseFragment = new EnterpriseFragment();
                 return EnterpriseFragment;
             case 3:
-                // notifications fragment
+                // pharmacy fragment
                 PharmacyFragment PharmacyFragment = new PharmacyFragment();
                 return PharmacyFragment;
 
             case 4:
-                // settings fragment
+                // medicine fragment
                 MedicineFragment MedicineFragment = new MedicineFragment();
                 return MedicineFragment;
             default:
@@ -396,5 +409,17 @@ public class MainActivity extends AppCompatActivity {
             fab.show();
         else
             fab.hide();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment=null;
+        switch (v.getId()){
+            case R.id.doctorCardID:
+                navItemIndex=1;
+                CURRENT_TAG=TAG_DOCTOR;
+                loadHomeFragment();
+                break;
+        }
     }
 }

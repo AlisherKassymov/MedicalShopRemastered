@@ -1,5 +1,7 @@
 package com.example.alisher.medicalshopremastered.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.alisher.medicalshopremastered.R;
+import com.example.alisher.medicalshopremastered.activity.MedicineItemActivity;
 import com.example.alisher.medicalshopremastered.enitity.Medicine;
+import com.example.alisher.medicalshopremastered.interfaces.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,24 +24,14 @@ import java.util.List;
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyViewHolder> implements Filterable {
     private List<Medicine> itemsData;
     private List<Medicine> itemsFilteredData;
+    private Context context;
+    private static final String NAME="name";
+    private static final String DESC="description";
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public CardView cardView;
-        public TextView textView1,textView2;
-        public View mView;
-
-        public MyViewHolder(View view){
-            super(view);
-            mView=view;
-            cardView=(CardView) view.findViewById(R.id.medicine_card_view);
-            textView1=(TextView) view.findViewById(R.id.medicineName);
-            textView2=(TextView) view.findViewById(R.id.medicinePrice);
-        }
-    }
-
-    public MedicineAdapter(List<Medicine> itemsData){
+    public MedicineAdapter(List<Medicine> itemsData, Context context){
         this.itemsData=itemsData;
         this.itemsFilteredData=itemsData;
+        this.context = context;
     }
 
 
@@ -50,12 +46,32 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, final int position){
         holder.textView1.setText(itemsData.get(position).getName());
         holder.textView2.setText(itemsData.get(position).getPrice());
+
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                if(isLongClick){
+                    Toast.makeText(context, "Long Click: "+itemsData.get(position).getName(), Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Simple Click: "+itemsData.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Intent detailIntent=new Intent(context,MedicineItemActivity.class);
+                    Medicine medicineItem=itemsData.get(position);
+
+                    detailIntent.putExtra(NAME,medicineItem.getName());
+                    detailIntent.putExtra(DESC, medicineItem.getDescription());
+                    context.startActivity(detailIntent);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount(){
         return itemsFilteredData.size();
     }
+
+
 
 
     @Override
@@ -91,5 +107,38 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+        public CardView cardView;
+        public TextView textView1,textView2, description;
+        public View mView;
+
+        private ItemClickListener itemClickListener;
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), true);
+            return true;
+        }
+
+        public MyViewHolder(View view){
+            super(view);
+            mView=view;
+            cardView=(CardView) view.findViewById(R.id.medicine_card_view);
+            textView1=(TextView) view.findViewById(R.id.medicineName);
+            textView2=(TextView) view.findViewById(R.id.medicinePrice);
+
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
+
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener){
+            this.itemClickListener = itemClickListener;
+        }
     }
 }

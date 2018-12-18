@@ -50,7 +50,7 @@ public class MedicineFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MedicineAdapter mAdapter;
     List<Medicine> medicines=new ArrayList<>();
-    private String JSONUrl="http://0129df58.ngrok.io/api/medicine";
+    private String JSONUrl = "http://f50b2de5.ngrok.io/api/medicine";
     private SearchView searchView;
 
 
@@ -105,11 +105,8 @@ public class MedicineFragment extends Fragment {
 
         mRecyclerView=(RecyclerView) view.findViewById(R.id.medicineRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        /*medicines.add(new Medicine("Ковалол", "432432"));
-        medicines.add(new Medicine("Лолик 2","1232"));
-        medicines.add(new Medicine("Кетонал","321"));*/
 
-        mAdapter=new MedicineAdapter(medicines);
+        mAdapter=new MedicineAdapter(medicines, view.getContext());
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL,36));
         mRecyclerView.setAdapter(mAdapter);
@@ -167,8 +164,14 @@ public class MedicineFragment extends Fragment {
                         JSONObject jsonObject = response.getJSONObject(i);
 
                         Medicine medicine = new Medicine();
+                        medicine.setMedicineID(jsonObject.getInt("medicineID"));
                         medicine.setName(jsonObject.getString("name"));
                         medicine.setPrice(jsonObject.getString("price"));
+                        medicine.setDescription(jsonObject.getString("description"));
+                        medicine.setContradiction(jsonObject.getString("contradication"));
+                        medicine.setMedicineCode(jsonObject.getString("medicineCode"));
+                        medicine.setUse_in_case(jsonObject.getString("use_in_case"));
+                        medicine.setQuantity(jsonObject.getInt("quantity"));
 
                         medicines.add(medicine);
                     } catch (JSONException e) {
