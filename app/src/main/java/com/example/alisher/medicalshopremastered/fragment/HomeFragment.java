@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.alisher.medicalshopremastered.R;
+import com.example.alisher.medicalshopremastered.activity.MainActivity;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -24,7 +28,6 @@ public class HomeFragment extends Fragment{
     //5 Cardview for Home Fragment
     private CardView doctodCard, enterpriseCard, medicinesCard, pharmacyCard;
     private FragmentManager fragmentManager;
-    public static int navItemIndex = 1;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,17 +75,62 @@ public class HomeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_home, container, false);
-        /*//Define card
+        //Define card
         doctodCard=(CardView) view.findViewById(R.id.doctorCardID);
         enterpriseCard=(CardView) view.findViewById(R.id.enterpriseCardID);
         medicinesCard=(CardView) view.findViewById(R.id.medicinesCardID);
         pharmacyCard=(CardView) view.findViewById(R.id.pharmacyCardID);
-        //Add click listener
-        doctodCard.setOnClickListener(this);
-        enterpriseCard.setOnClickListener(this);
-        medicinesCard.setOnClickListener(this);
-        pharmacyCard.setOnClickListener(this);
-*/
+
+        //OnClickListener for Home menu
+        doctodCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new DoctorsFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.doctorString);
+                fragmentTransaction.commit();
+            }
+        });
+        enterpriseCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragmentEnterprise=new EnterpriseFragment();
+                FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragmentEnterprise);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.enterpriseString);
+                fragmentTransaction.commit();
+            }
+        });
+        medicinesCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragmentMedicines = new MedicineFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragmentMedicines);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.medicineString);
+                fragmentTransaction.commit();
+            }
+        });
+        pharmacyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragmentPharmacy = new PharmacyFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragmentPharmacy);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.pharmacyString);
+                fragmentTransaction.commit();
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return view;
     }

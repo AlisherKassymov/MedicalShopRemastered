@@ -38,7 +38,8 @@ import com.example.alisher.medicalshopremastered.fragment.MedicineFragment;
 import com.example.alisher.medicalshopremastered.fragment.PharmacyFragment;
 import com.example.alisher.medicalshopremastered.other.CircleTransform;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+public class MainActivity extends AppCompatActivity{
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -47,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    private MedicineAdapter mAdapter;
-    private SearchView searchView;
-    private MedicineFragment medicineFragment;
-    private CardView doctodCard, enterpriseCard, medicinesCard, pharmacyCard;
-
 
     // urls to load navigation header background image
     // and profile image
@@ -99,17 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
-
-        doctodCard=(CardView)findViewById(R.id.doctorCardID);
-        enterpriseCard=(CardView)findViewById(R.id.enterpriseCardID);
-        medicinesCard=(CardView)findViewById(R.id.medicinesCardID);
-        pharmacyCard=(CardView)findViewById(R.id.pharmacyCardID);
-        //Add click listener
-        /*doctodCard.setOnClickListener((View.OnClickListener) this);
-        enterpriseCard.setOnClickListener((View.OnClickListener) this);
-        medicinesCard.setOnClickListener((View.OnClickListener) this);
-        pharmacyCard.setOnClickListener((View.OnClickListener) this);*/
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -409,17 +394,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fab.show();
         else
             fab.hide();
-    }
-
-    @Override
-    public void onClick(View v) {
-        Fragment fragment=null;
-        switch (v.getId()){
-            case R.id.doctorCardID:
-                navItemIndex=1;
-                CURRENT_TAG=TAG_DOCTOR;
-                loadHomeFragment();
-                break;
-        }
     }
 }

@@ -50,7 +50,7 @@ public class MedicineFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MedicineAdapter mAdapter;
     List<Medicine> medicines=new ArrayList<>();
-    private String JSONUrl = "http://f50b2de5.ngrok.io/api/medicine";
+    private String JSONUrl = "http://79316227.ngrok.io/api/medicine";
     private SearchView searchView;
 
 

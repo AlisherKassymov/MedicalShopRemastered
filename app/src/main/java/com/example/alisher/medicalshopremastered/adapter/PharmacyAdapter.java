@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alisher.medicalshopremastered.R;
-import com.example.alisher.medicalshopremastered.activity.MedicineItemActivity;
 import com.example.alisher.medicalshopremastered.activity.PharmacyItemActivity;
 import com.example.alisher.medicalshopremastered.enitity.Pharmacy;
 import com.example.alisher.medicalshopremastered.interfaces.ItemClickListener;

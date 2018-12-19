@@ -49,7 +49,7 @@ public class PharmacyFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PharmacyAdapter mAdapter;
     List<Pharmacy> pharmacies=new ArrayList<>();
-    private String JSONUrl="http://f50b2de5.ngrok.io/api/pharmacie";
+    private String JSONUrl="http://79316227.ngrok.io/api/pharmacie";
     private SearchView searchView;
 
 

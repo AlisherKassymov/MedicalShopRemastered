@@ -27,6 +27,9 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     private Context context;
     private static final String NAME="name";
     private static final String DESC="description";
+    private static final String CONTRADICTION="contradiction";
+    private static final String USEINCASE="useInCase";
+    private static final String PRICE="price";
 
     public MedicineAdapter(List<Medicine> itemsData, Context context){
         this.itemsData=itemsData;
@@ -60,6 +63,9 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
 
                     detailIntent.putExtra(NAME,medicineItem.getName());
                     detailIntent.putExtra(DESC, medicineItem.getDescription());
+                    detailIntent.putExtra(PRICE,medicineItem.getPrice());
+                    detailIntent.putExtra(CONTRADICTION,medicineItem.getContradiction());
+                    detailIntent.putExtra(USEINCASE,medicineItem.getUse_in_case());
                     context.startActivity(detailIntent);
                 }
             }

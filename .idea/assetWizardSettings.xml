@@ -33,7 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_search" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\KALIG\Fourth  course\Mobile\Medical_Shop\Medical Shop\pills (1).png" />
+                                      <entry key="outputName" value="ic_pills" />
                                     </map>
                                   </option>
                                 </PersistentState>

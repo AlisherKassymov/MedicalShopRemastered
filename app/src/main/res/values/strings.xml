@@ -11,6 +11,15 @@
     <string name="nav_notifications">Pharmacy</string>
     <string name="nav_settings">Medicines</string>
     <string name="nav_about_us">About Us</string>
+    <string name="doctorString">Doctors</string>
+    <string name="enterpriseString">Enterprises</string>
+    <string name="pharmacyString">Pharmacy</string>
+    <string name="medicineString">Medicines</string>
+
+    <!--<string name="APIMedicine">http://c3811f9f.ngrok.io/api/medicine</string>
+    <string name="APIDoctor">http://c3811f9f.ngrok.io/api/doctor</string>
+    <string name="APIPharmacy">http://c3811f9f.ngrok.io/api/pharmacie</string>
+    <string name="APIEnterprise">http://c3811f9f.ngrok.io/api/MedEnterprise</string>-->
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
