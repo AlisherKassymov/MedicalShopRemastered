@@ -2,6 +2,7 @@ package com.example.alisher.medicalshopremastered.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.example.alisher.medicalshopremastered.activity.DoctorItemActivity;
 import com.example.alisher.medicalshopremastered.activity.MedicineItemActivity;
 import com.example.alisher.medicalshopremastered.enitity.Doctor;
 import com.example.alisher.medicalshopremastered.enitity.Medicine;
+import com.example.alisher.medicalshopremastered.enitity.Pharmacy;
 import com.example.alisher.medicalshopremastered.interfaces.ItemClickListener;
 
 import java.util.ArrayList;
@@ -54,12 +56,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.MyViewHold
         holder.textView1.setText(itemsData.get(position).getDoctorName());
         holder.textView2.setText(itemsData.get(position).getDoctorType().getSpecName());
 
-
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(isLongClick){
-                    Toast.makeText(context, "Operation: "+"Added to cart", Toast.LENGTH_SHORT).show();
+                    Doctor doctor=itemsData.get(position);
+                    Intent intent=new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+doctor.getDoctorPhone()));
+                    context.startActivity(intent);
                 }else{
                     Intent detailIntent=new Intent(context,DoctorItemActivity.class);
                     Doctor doctorItem=itemsData.get(position);

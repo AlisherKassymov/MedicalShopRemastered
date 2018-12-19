@@ -2,6 +2,7 @@ package com.example.alisher.medicalshopremastered.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,22 +50,17 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         holder.textView2.setText(itemsData.get(position).getTime_at());
 
 
-        /*holder.setItemClickListener(new ItemClickListener() {
+        holder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View view, int position, boolean isLongClick) {
+            public void onClick(View view, final int position, boolean isLongClick) {
                 if(isLongClick){
-                    Toast.makeText(context, "Long Click: "+itemsData.get(position).getPharmName(), Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(context, "Simple Click: "+itemsData.get(position).getPharmPhone(), Toast.LENGTH_SHORT).show();
-                    Intent detailIntent=new Intent(context,PharmacyItemActivity.class);
-                    Pharmacy pharmacyItem=itemsData.get(position);
-
-                    detailIntent.putExtra(NAME,pharmacyItem.getPharmName());
-                    detailIntent.putExtra(ADDRESS, pharmacyItem.getPharmAddress());
-                    context.startActivity(detailIntent);
+                            Pharmacy pharmacy=itemsData.get(position);
+                            Intent intent=new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+pharmacy.getPharmPhone()));
+                            context.startActivity(intent);
                 }
             }
-        });*/
+        });
     }
 
     @Override
@@ -108,22 +104,18 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         };
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
         public CardView cardView;
         public TextView textView1,textView2;
         public View mView;
 
-        /*private ItemClickListener itemClickListener;
-        @Override
-        public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition(), false);
-        }
+        private ItemClickListener itemClickListener;
 
         @Override
         public boolean onLongClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), true);
             return true;
-        }*/
+        }
 
         public MyViewHolder(View view){
             super(view);
@@ -132,12 +124,11 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
             textView1=(TextView) view.findViewById(R.id.pharmacyName);
             textView2=(TextView) view.findViewById(R.id.pharmacyTime);
 
-            /*view.setOnClickListener(this);
-            view.setOnLongClickListener(this);*/
+            view.setOnLongClickListener(this);
         }
 
-        /*public void setItemClickListener(ItemClickListener itemClickListener){
+        public void setItemClickListener(ItemClickListener itemClickListener){
             this.itemClickListener = itemClickListener;
-        }*/
+        }
     }
 }

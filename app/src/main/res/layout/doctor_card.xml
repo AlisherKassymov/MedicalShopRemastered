@@ -18,11 +18,13 @@
                 android:layout_height="72dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/doctor"/>
 
             <TextView
                 android:id="@+id/doctorName"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/doctorImage"
                 android:textStyle="bold"
@@ -30,6 +32,7 @@
             <TextView
                 android:id="@+id/doctorPrice"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/doctorImage"
                 android:layout_marginTop="20dp"/>

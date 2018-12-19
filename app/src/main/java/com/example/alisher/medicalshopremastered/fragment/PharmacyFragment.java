@@ -1,9 +1,12 @@
 package com.example.alisher.medicalshopremastered.fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,13 +47,14 @@ import java.util.List;
  * Use the {@link PharmacyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PharmacyFragment extends Fragment {
+public class PharmacyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecyclerView;
     private PharmacyAdapter mAdapter;
     List<Pharmacy> pharmacies=new ArrayList<>();
     private String JSONUrl="https://3e196824.ngrok.io/api/pharmacie";
     private SearchView searchView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
 
@@ -101,6 +105,11 @@ public class PharmacyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_pharmacy, container, false);
 
+
+
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.pharmacySwipe);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         mRecyclerView=(RecyclerView) view.findViewById(R.id.pharmacyRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -136,6 +145,14 @@ public class PharmacyFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+        pharmacies.clear();
+        FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
 
     /**

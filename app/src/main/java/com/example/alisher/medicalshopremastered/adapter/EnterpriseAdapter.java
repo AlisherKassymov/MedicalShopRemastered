@@ -48,27 +48,6 @@ public class EnterpriseAdapter extends RecyclerView.Adapter<EnterpriseAdapter.My
     public void onBindViewHolder(MyViewHolder holder, final int position){
         holder.textView1.setText(itemsData.get(position).getMedName());
         holder.textView2.setText(itemsData.get(position).getTime_at());
-
-
-        /*holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick){
-                    Toast.makeText(context, "Long Click: "+itemsData.get(position).getMedName(), Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(context, "Simple Click: "+itemsData.get(position).getTime_at(), Toast.LENGTH_SHORT).show();
-                    Intent detailIntent=new Intent(context,EnterpriseItemActivity.class);
-                    Medical_Enterprise medical_enterpriseItem=itemsData.get(position);
-
-                    detailIntent.putExtra(NAME,medical_enterpriseItem.getMedName());
-                    detailIntent.putExtra(ADDRESS, medical_enterpriseItem.getMedAddress());
-                    detailIntent.putExtra(DESCRIPTION,medical_enterpriseItem.getMedDescription());
-                    detailIntent.putExtra(TIME,medical_enterpriseItem.getTime_at());
-
-                    context.startActivity(detailIntent);
-                }
-            }
-        });*/
     }
 
     @Override
