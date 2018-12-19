@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alisher.medicalshopremastered.R;
+import com.example.alisher.medicalshopremastered.activity.DoctorItemActivity;
 import com.example.alisher.medicalshopremastered.activity.MedicineItemActivity;
 import com.example.alisher.medicalshopremastered.enitity.Doctor;
 import com.example.alisher.medicalshopremastered.enitity.Medicine;
@@ -58,10 +59,9 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.MyViewHold
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(isLongClick){
-                    Toast.makeText(context, "Long Click: "+itemsData.get(position).getDoctorName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Operation: "+"Added to cart", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "Simple Click: "+itemsData.get(position).getDoctorName(), Toast.LENGTH_SHORT).show();
-                    Intent detailIntent=new Intent(context,MedicineItemActivity.class);
+                    Intent detailIntent=new Intent(context,DoctorItemActivity.class);
                     Doctor doctorItem=itemsData.get(position);
 
                     detailIntent.putExtra(NAME,doctorItem.getDoctorName());

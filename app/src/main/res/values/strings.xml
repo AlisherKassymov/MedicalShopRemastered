@@ -44,8 +44,8 @@
     <string name="toolbar_title">Medicines</string>
     <string name="action_search">Search</string>
     <string name="search_hint">Type name…</string>
-    <string name="app_name">Medicine Shop</string>
-    <string name="android_medicine">Medicine Shop Inc.</string>
+    <string name="app_name">Medical Shop</string>
+    <string name="android_medicine">Medical Shop Inc.</string>
     <string name="profile">Profile</string>
     <string name="medicines">Medicines</string>
     <string name="pharmacies">Pharmacies</string>

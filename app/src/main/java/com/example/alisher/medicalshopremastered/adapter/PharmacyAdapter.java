@@ -25,8 +25,8 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
     private List<Pharmacy> itemsData;
     private List<Pharmacy> itemsFilteredData;
     private Context context;
-    private static final String NAME="Pharmname";
-    private static final String ADDRESS="Pharmaddress";
+   /* private static final String NAME="Pharmname";
+    private static final String ADDRESS="Pharmaddress";*/
 
 
     public PharmacyAdapter(List<Pharmacy> itemsData, Context context){
@@ -49,7 +49,7 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         holder.textView2.setText(itemsData.get(position).getTime_at());
 
 
-        holder.setItemClickListener(new ItemClickListener() {
+        /*holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(isLongClick){
@@ -64,7 +64,7 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
                     context.startActivity(detailIntent);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -108,12 +108,12 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         };
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         public TextView textView1,textView2;
         public View mView;
 
-        private ItemClickListener itemClickListener;
+        /*private ItemClickListener itemClickListener;
         @Override
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
@@ -123,7 +123,7 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
         public boolean onLongClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), true);
             return true;
-        }
+        }*/
 
         public MyViewHolder(View view){
             super(view);
@@ -132,12 +132,12 @@ public class PharmacyAdapter extends RecyclerView.Adapter<PharmacyAdapter.MyView
             textView1=(TextView) view.findViewById(R.id.pharmacyName);
             textView2=(TextView) view.findViewById(R.id.pharmacyTime);
 
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
+            /*view.setOnClickListener(this);
+            view.setOnLongClickListener(this);*/
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
+        /*public void setItemClickListener(ItemClickListener itemClickListener){
             this.itemClickListener = itemClickListener;
-        }
+        }*/
     }
 }

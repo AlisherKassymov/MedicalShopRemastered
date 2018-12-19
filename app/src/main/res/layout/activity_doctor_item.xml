@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/medicine_card_item_view"
+        android:id="@+id/doctor_card_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -13,34 +13,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/medicineItemImage"
+                android:id="@+id/doctorItemImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/pillsitem"/>
+                android:src="@drawable/doctor"/>
 
             <TextView
-                android:id="@+id/medicineNameClick"
+                android:id="@+id/doctorNameClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/medicineItemImage"
+                android:layout_toEndOf="@+id/doctorItemImage"
                 android:textStyle="bold"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/medicinePriceClick"
+                android:id="@+id/doctorSurnameClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/medicineItemImage"
+                android:layout_toEndOf="@id/doctorItemImage"
                 android:layout_marginTop="20dp"/>
 
             <TextView
-                android:id="@+id/medicineStockClick"
+                android:id="@+id/doctorPhoneClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/medicineItemImage"
-                android:text="In Stock"
-                android:textStyle="bold"
+                android:layout_toEndOf="@+id/doctorItemImage"
                 android:layout_marginTop="40dp"/>
 
         </RelativeLayout>
@@ -63,16 +61,10 @@
                 android:textStyle="bold"
                 android:text="Description: " />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/medicineDescriptionClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </ScrollView>
+            <TextView
+                android:id="@+id/doctorDescriptionClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -85,18 +77,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contradiction: "
+                android:text="Type: "
                 android:textStyle="bold" />
 
-            <ScrollView
+            <TextView
+                android:id="@+id/doctorTypeClick"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/contradictionClick"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-            </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enterprise: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/doctorEnterpriseClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
 
@@ -109,11 +114,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Use in Case: "
+                android:text="Price: "
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/use_in_case_Click"
+                android:id="@+id/doctorPriceClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

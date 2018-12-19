@@ -55,9 +55,8 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(isLongClick){
-                    Toast.makeText(context, "Long Click: "+itemsData.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Operation: "+"Added to cart", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "Simple Click: "+itemsData.get(position).getName(), Toast.LENGTH_SHORT).show();
                     Intent detailIntent=new Intent(context,MedicineItemActivity.class);
                     Medicine medicineItem=itemsData.get(position);
 

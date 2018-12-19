@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.android.volley.RequestQueue;
@@ -38,6 +41,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -46,12 +51,13 @@ import java.util.List;
  * Use the {@link MedicineFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MedicineFragment extends Fragment {
+public class MedicineFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecyclerView;
     private MedicineAdapter mAdapter;
     List<Medicine> medicines=new ArrayList<>();
     private String JSONUrl = "https://3e196824.ngrok.io/api/medicine";
     private SearchView searchView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -103,6 +109,9 @@ public class MedicineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_medicine, container, false);
 
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipeMedicine);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         mRecyclerView=(RecyclerView) view.findViewById(R.id.medicineRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -138,6 +147,14 @@ public class MedicineFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+        medicines.clear();
+        FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
 
     /**
