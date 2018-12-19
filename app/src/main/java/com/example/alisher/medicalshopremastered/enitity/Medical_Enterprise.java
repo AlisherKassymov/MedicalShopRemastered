@@ -16,6 +16,9 @@ public class Medical_Enterprise {
         Time_at = time_at;
     }
 
+    public Medical_Enterprise() {
+    }
+
     public int getMedID() {
         return MedID;
     }

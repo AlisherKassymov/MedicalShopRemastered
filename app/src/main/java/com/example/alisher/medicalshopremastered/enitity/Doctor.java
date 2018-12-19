@@ -22,6 +22,9 @@ public class Doctor {
         Price = price;
     }
 
+    public Doctor() {
+    }
+
     public int getDoctorID() {
         return DoctorID;
     }
@@ -58,10 +61,6 @@ public class Doctor {
         return doctorType;
     }
 
-    public void setDoctorType(Specialization doctorType) {
-        this.doctorType = doctorType;
-    }
-
     public String getDoctorPhone() {
         return DoctorPhone;
     }
@@ -85,4 +84,10 @@ public class Doctor {
     public void setPrice(String price) {
         Price = price;
     }
+
+    public void setDoctorType(Specialization doctorType) {
+        this.doctorType = doctorType;
+    }
+
+
 }

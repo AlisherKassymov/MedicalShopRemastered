@@ -1,13 +1,41 @@
 package com.example.alisher.medicalshopremastered.fragment;
+import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.alisher.medicalshopremastered.R;
+import com.example.alisher.medicalshopremastered.adapter.EnterpriseAdapter;
+import com.example.alisher.medicalshopremastered.adapter.MedicineAdapter;
+import com.example.alisher.medicalshopremastered.decorator.SimpleDividerItemDecoration;
+import com.example.alisher.medicalshopremastered.enitity.Medical_Enterprise;
+import com.example.alisher.medicalshopremastered.enitity.Medicine;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -17,6 +45,14 @@ import com.example.alisher.medicalshopremastered.R;
  * create an instance of this fragment.
  */
 public class EnterpriseFragment extends Fragment {
+
+    private RecyclerView mRecyclerView;
+    private EnterpriseAdapter mAdapter;
+    List<Medical_Enterprise> enterprises=new ArrayList<>();
+    private String JSONUrl = "https://3e196824.ngrok.io/api/MedEnterprise";
+    private SearchView searchView;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,10 +96,69 @@ public class EnterpriseFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_enterprise, container, false);
+
+        mRecyclerView=(RecyclerView) view.findViewById(R.id.enterpriseRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        mAdapter=new EnterpriseAdapter(enterprises, view.getContext());
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(view.getContext(),DividerItemDecoration.VERTICAL,36));
+        mRecyclerView.setAdapter(mAdapter);
+
+        jsonParser();
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_enterprise, container, false);
+        return view;
+    }
+
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem=menu.findItem(R.id.action_search);
+        searchView=(SearchView)menuItem.getActionView();
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -103,5 +198,37 @@ public class EnterpriseFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void jsonParser(){
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(JSONUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+
+                        Medical_Enterprise enterprise= new Medical_Enterprise();
+                        enterprise.setMedID(jsonObject.getInt("medID"));
+                        enterprise.setMedName(jsonObject.getString("medName"));
+                        enterprise.setMedDescription(jsonObject.getString("medDescription"));
+                        enterprise.setMedAddress(jsonObject.getString("medAddress"));
+                        enterprise.setTime_at(jsonObject.getString("time_at"));
+
+                        enterprises.add(enterprise);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley",error.toString());
+            }
+        });
+        RequestQueue requestQueue=Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
     }
 }

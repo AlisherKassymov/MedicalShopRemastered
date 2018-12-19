@@ -11,6 +11,9 @@ public class Specialization {
         SpecDescription = specDescription;
     }
 
+    public Specialization() {
+    }
+
     public int getSpecID() {
         return SpecID;
     }

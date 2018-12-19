@@ -34,7 +34,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MedicineItemActivity" />
-        <activity android:name=".activity.PharmacyItemActivity"></activity>
+        <activity android:name=".activity.PharmacyItemActivity" />
+        <activity android:name=".activity.EnterpriseItemActivity"></activity>
     </application>
 
 </manifest>
